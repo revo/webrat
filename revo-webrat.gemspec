@@ -233,7 +233,7 @@ Most Ruby web frameworks and testing frameworks are supported.}
     "spec/spec.opts",
     "spec/spec_helper.rb",
     "vendor/selenium-server.jar",
-    "webrat.gemspec"
+    "revo-webrat.gemspec"
   ]
   s.homepage = %q{http://github.com/brynary/webrat}
   s.require_paths = ["lib"]
