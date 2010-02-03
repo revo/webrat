@@ -10,13 +10,17 @@ module Webrat #:nodoc:
         stringlike
       elsif Nokogiri::XML::NodeSet === stringlike
         stringlike
-      elsif stringlike.respond_to?(:body)
-        Nokogiri::HTML(stringlike.body.to_s)
+      elsif stringlike.respond_to?(:body)                        
+        Nokogiri::HTML(stringlike.body.to_s, detect_encoding(stringlike.body.to_s))
       else
-        Nokogiri::HTML(stringlike.to_s)
+        Nokogiri::HTML(stringlike.to_s, detect_encoding(stringlike.to_s))
       end
     end
-
+    
+    def self.detect_encoding(string)
+       string.isutf8 ? "utf-8" : nil
+    end
+    
     def self.html_document(stringlike) #:nodoc:
       return stringlike.dom if stringlike.respond_to?(:dom)
 
@@ -25,9 +29,9 @@ module Webrat #:nodoc:
       elsif Nokogiri::XML::NodeSet === stringlike
         stringlike
       elsif stringlike.respond_to?(:body)
-        Nokogiri::HTML(stringlike.body.to_s)
+        Nokogiri::HTML(stringlike.body.to_s, detect_encoding(stringlike.body.to_s))
       else
-        Nokogiri::HTML(stringlike.to_s)
+        Nokogiri::HTML(stringlike.to_s, detect_encoding(stringlike.to_s))
       end
     end
 
@@ -39,9 +43,9 @@ module Webrat #:nodoc:
       elsif Nokogiri::XML::NodeSet === stringlike
         stringlike
       elsif stringlike.respond_to?(:body)
-        Nokogiri::XML(stringlike.body.to_s)
+        Nokogiri::XML(stringlike.body.to_s, detect_encoding(stringlike.body.to_s))
       else
-        Nokogiri::XML(stringlike.to_s)
+        Nokogiri::XML(stringlike.to_s, detect_encoding(stringlike.body.to_s))
       end
     end
 
