@@ -332,7 +332,13 @@ module Webrat
     end
 
     def scoped_dom
-      @scope.dom.css(@selector).first
+      begin
+        # css selector?
+        @scope.dom.css(@selector).first
+      rescue Nokogiri::CSS::SyntaxError => e
+        # xpath selector?
+        @scope.dom.xpath(@selector).first
+      end
     end
 
     def locate_field(field_locator, *field_types) #:nodoc:
